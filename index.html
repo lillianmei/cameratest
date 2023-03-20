@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Instascan</title>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript">
+  </script>
+<body>
+  <div id="reader" width="600px"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+    // function onScanSuccess(decodedText, decodedResult) {
+    //   // handle the scanned code as you like, for example:
+    //   console.log(`Code matched = ${decodedText}`, decodedResult);
+    //   var axios = require('axios');
+    //   var data = JSON.stringify({
+    //     "qr_text": "qpGcSnf4o9B6bqhVaOIG4jERf39KT60HBlXOa8tyJQ8xyioSOCr7r9u8P9Jf9tt7rPVg6z+e6qxgmdVpd4WOAiZl4jg92u2YlyYutPIIzCYgl1DJNaw5IpR0Z1QCxEbchwxFQgO6XYL50SXnh8sQmbJy3HgTetKKzJObXtprYjyQpJKWKeKh5g7Obt4j45654UBpszq2J7lJdokcs5QCWv9fsIY1XOzXubzOv7E8O4VA8UBUgjKbPIc3b2V9NpGyDd/C0hgzrHrNPjjtscbhYPMUCP8pjkRa/ritDSTMh5DATBW0hJ2GczSOFYqJXKu0vHenx+utK7D4YZxCB8kJLLpmshNUUprxV98gsfRjy44S2eu3TcChYR75AtkB8Tkg6N+69ajlUXY5sh5PsrQnXR8QGoV2BJYWuWVIi0E32nX28ZkQTDCNOdAudP2w/uWMdfbD3b3l6TRop+PjTZoObk9vQyffCuo0z1lX+PTzsYqh9EYdwddqLMDvnNRDn6bDJWmSRCx5G1RVBeG6NK/WLecMdP3/jaxoWK4wF45+8LW31dwFP5FN8WUq6aTIEneliQ930chmh5tk1grIZxyZ1ib5OdhLk4/7Ss8f6TRb+SeciMX0UdhYYHHPxqJdqIr62yBC9D7faUuPPBekTRF4hCk4HjfA4RI97l+rOXOML9Y="
+    //   });
+    //   console.log(data)
+
+    //   var config = {
+    //     method: 'post',
+    //     headers: {
+    //       'Authorization': 'Bearer ',
+    //       'Content-Type': 'application/json',
+    //       'Cookie': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJNYXgiLCJleHAiOjE2OTA5OTM5MTIsInVzZXJfaWQiOjIsInJvbGUiOiJvcGVyYXRvcl91c2VyIn0.fJM5vm_SNcysT2ix9gN6fXpJphlmDrRe9v37Cpp2UB0'
+    //     },
+    //     data: data
+    //   };
+
+    //   // axios(config)
+    //   //   .then(function (response) {
+    //   //     console.log(JSON.stringify(response.data));
+    //   //   })
+    //   //   .catch(function (error) {
+    //   //     console.log(error);
+    //   //   });
+
+    // }
+
+    // function onScanFailure(error) {
+    //   // handle scan failure, usually better to ignore and keep scanning.
+    //   // for example:
+    //   console.warn(`Code scan error = ${error}`);
+    // }
+
+    // let html5QrcodeScanner = new Html5QrcodeScanner(
+    //   "reader",
+    //   { fps: 10, qrbox: { width: 250, height: 250 } },
+    //   /* verbose= */ false);
+    // html5QrcodeScanner.render(onScanSuccess);
+    Html5Qrcode.getCameras().then(devices => {
+      if (devices && devices.length) {
+        var cameraId = devices[0].id;
+        const html5QrCode = new Html5Qrcode("reader");
+        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+          alert(decodedText);// 這裡已經可以正確彈出掃描結果，但點按無法跳轉
+        };
+        const config = {
+          qrbox: {
+            width: 150,
+            height: 150
+          }
+        };
+        html5QrCode.start({
+          facingMode: "environment"
+        }, config, qrCodeSuccessCallback);
+      }
+    }).catch(err => {
+      // handle err
+    });
+  </script>
+</body>
+</html>
